@@ -14,7 +14,11 @@ This is useful for quickly scanning a target IP from an external source. Quicker
 
 ## Deployment 
 ```
-$ now --public
+curl -o lightsail-compose.sh https://raw.githubusercontent.com/robmotic/nmap_scan/master/lightsail-compose.sh
+
+chmod +x ./lightsail-compose.sh
+export TOKEN="1234567890"
+./lightsail-compose.sh
 ```
 
 If you want to change the arguments of the `nmap` scan (e.g. run a script or look for more ports), you'll need to change the following line in `index.js`:
