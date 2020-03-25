@@ -14,7 +14,7 @@ This is useful for quickly scanning a target IP from an external source. Quicker
 
 ## Deployment 
 ```
-curl -o lightsail-compose.sh https://raw.githubusercontent.com/robmotic/nmap_scan/master/lightsail-compose.sh
+curl -o lightsail-compose.sh https://raw.githubusercontent.com/robomotic/nmap_scan/master/lightsail-compose.sh
 
 chmod +x ./lightsail-compose.sh
 export TOKEN="1234567890"
