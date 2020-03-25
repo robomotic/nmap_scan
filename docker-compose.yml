@@ -1,0 +1,27 @@
+version: "3.3"
+
+services:
+  db:
+    image: mongo:latest
+    networks:
+      - nmap_net
+    volumes:
+      - type: volume
+        source: dbdata
+        target: /data/db
+
+  front_end:
+    image: nodenmap:latest
+    ports:
+      - "80:3000"
+    networks:
+      - nmap_net
+    environment: 
+      - DB_URL=mongodb://db:27017
+      - DEBUG=app:*
+    
+networks:
+    nmap_net:
+
+volumes:
+  dbdata:
