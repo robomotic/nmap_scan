@@ -28,12 +28,19 @@ const authSimple = (req, res, next) => {
 
 const runScan = async (host,flags=nmap_flags) => {
   let results = '';
+  let errors = '';
+
   console.log(`run scan: ${host}`);
-  const command = spawn('nmap', flags.concat(['-oX','-',host]));
+  const command = spawn('nmap', flags.concat([host]));
   for await (const data of command.stdout) {
     results = results + data;
   }
-  return results.toString();
+
+  for await (const data of command.stderr) {
+    errors = errors + data;
+  }
+
+  return [results.toString(),errors.toString()];
 }
 
 
@@ -60,16 +67,23 @@ app.get('/scan',authSimple, async(req, res) => {
     return res.send('Must include a host param to scan');
   }
 
-  let results;
   try {
     if (!nflags)
     {
-      results = await runScan(host);
+      let [results,errors] = await runScan(host,['-oX','-']);
     }
     else{
-      results = await runScan(host,nflags.split("|"));
+      let [results,errors] = await runScan(host,nflags.split("|"));
     }
-    res.send(results);
+
+    if (errors == null || errors=='')
+    {
+      res.send(results);
+    }
+    else{
+      res.set(500);
+      res.send(errors);
+    }
   } catch (err) {
     console.log(`error: ${err}`);
     res.set(500);
