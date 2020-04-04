@@ -1,5 +1,6 @@
 FROM node:10-alpine
 RUN apk add nmap
+RUN apk add nmap-scripts
 
 WORKDIR /app
 COPY package.json .

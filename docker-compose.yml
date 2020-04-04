@@ -1,15 +1,24 @@
 version: "3.3"
 
 services:
+  redis: 
+    image: redis:rc-alpine3.11
+    container_name: nmap_cache
+    networks:
+      - nmap_net
+    expose:
+      - 6379
   front_end:
     image: nodenmap:latest
     ports:
       - "80:3000"
     networks:
       - nmap_net
+    links:
+      - redis
     environment: 
       - DEBUG=app:*
       - TOKEN=${TOKEN}
-    
+      - REDIS_URL=redis://nmap_cache:6379
 networks:
     nmap_net:

@@ -6,6 +6,8 @@
   "author": "Ronnie Flathers (@ropnop)",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "redis": "2.8.0",
+    "express-redis-cache":"1.1.3"
   }
 }
